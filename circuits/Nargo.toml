@@ -1,0 +1,9 @@
+[package]
+name = "zkpay"
+version = "1.0.0"
+description = "Zero-knowledge privacy pool for Stellar"
+authors = ["zkPay Team"]
+compiler_version = ">=0.34.0"
+type = "bin"
+
+[dependencies]

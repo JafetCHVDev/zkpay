@@ -1,0 +1,5 @@
+[workspace]
+members = ["pool"]
+
+[workspace.dependencies]
+soroban-sdk = "25.3.1"

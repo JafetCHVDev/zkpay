@@ -1,0 +1,16 @@
+{
+  "name": "zkpay",
+  "private": true,
+  "version": "1.0.0",
+  "description": "zkPay - Confidential Payments on Stellar using Zero-Knowledge Proofs",
+  "scripts": {
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "compile:circuit": "node scripts/compile.mjs"
+  },
+  "keywords": ["stellar", "zero-knowledge", "privacy", "noir", "zkp"],
+  "license": "MIT"
+}

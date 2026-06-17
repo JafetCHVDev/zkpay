@@ -1,0 +1,30 @@
+.stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.root-display {
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
