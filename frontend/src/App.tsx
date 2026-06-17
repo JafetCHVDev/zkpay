@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useWallet, NetworkType } from "stellar-wallet-kit";
 import Header from "./components/Header";
 import DepositPanel from "./components/DepositPanel";
 import WithdrawPanel from "./components/WithdrawPanel";
@@ -7,9 +8,15 @@ import { StellarService } from "./utils/stellar";
 import "./App.css";
 
 function App() {
+  const {
+    account,
+    isConnected,
+    connect,
+    disconnect,
+    signTransaction,
+  } = useWallet();
+
   const [stellar, setStellar] = useState<StellarService | null>(null);
-  const [connected, setConnected] = useState(false);
-  const [publicKey, setPublicKey] = useState("");
   const [activeTab, setActiveTab] = useState<"deposit" | "withdraw">("deposit");
   const [poolStats, setPoolStats] = useState({
     totalDeposits: 0,
@@ -20,30 +27,27 @@ function App() {
   useEffect(() => {
     const s = new StellarService();
     setStellar(s);
-    checkConnection(s);
   }, []);
 
-  async function checkConnection(s: StellarService) {
-    const pk = await s.connect();
-    if (pk) {
-      setConnected(true);
-      setPublicKey(pk);
+  useEffect(() => {
+    if (stellar && account && signTransaction && isConnected) {
+      stellar.setWallet(account.publicKey, signTransaction);
     }
-  }
+  }, [stellar, account, signTransaction, isConnected]);
 
-  async function handleConnect() {
-    if (!stellar) return;
-    const pk = await stellar.connect();
-    if (pk) {
-      setConnected(true);
-      setPublicKey(pk);
+  useEffect(() => {
+    if (!isConnected && stellar) {
+      stellar.setWallet("", null as any);
     }
-  }
+  }, [isConnected, stellar]);
 
-  async function handleDisconnect() {
-    setConnected(false);
-    setPublicKey("");
-  }
+  const handleConnect = useCallback(() => {
+    connect();
+  }, [connect]);
+
+  const handleDisconnect = useCallback(() => {
+    disconnect();
+  }, [disconnect]);
 
   async function handleDeposit(amount: number) {
     if (!stellar) return;
@@ -59,10 +63,12 @@ function App() {
     return result;
   }
 
+  const publicKey = account?.publicKey ?? "";
+
   return (
     <div className="app">
       <Header
-        connected={connected}
+        connected={isConnected}
         publicKey={publicKey}
         onConnect={handleConnect}
         onDisconnect={handleDisconnect}
@@ -109,7 +115,7 @@ function App() {
               </button>
             </div>
 
-            {!connected ? (
+            {!isConnected ? (
               <div className="connect-prompt card text-center">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ opacity: 0.5, marginBottom: "1rem" }}>
                   <rect x="1" y="4" width="22" height="16" rx="2" />
@@ -117,11 +123,11 @@ function App() {
                 </svg>
                 <h3>Connect Your Wallet</h3>
                 <p className="text-muted text-sm mt-1">
-                  Connect Freighter wallet to interact with the zkPay pool on
-                  Stellar Testnet
+                  Connect Freighter or another Stellar wallet to interact with
+                  the zkPay pool on Stellar Testnet
                 </p>
                 <button className="btn btn-primary mt-2" onClick={handleConnect}>
-                  Connect Freighter
+                  Connect Wallet
                 </button>
               </div>
             ) : (
@@ -140,8 +146,8 @@ function App() {
           </div>
 
           <div className="layout-side">
-            <PoolStatus stats={poolStats} connected={connected} />
-            
+            <PoolStatus stats={poolStats} connected={isConnected} />
+
             <div className="card mt-2">
               <div className="card-header">
                 <h3>How It Works</h3>
