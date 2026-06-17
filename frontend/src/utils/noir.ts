@@ -123,13 +123,6 @@ export async function generateProof(
         publicInputs: proof.publicInputs,
       };
   } catch (e) {
-    console.warn(
-      "Noir JS proof generation failed, using local verification:",
-      e
-    );
-    return {
-      proof: new Uint8Array(0),
-      publicInputs: [inputs.root, "0"],
-    };
+    throw new Error(`Proof generation failed: ${e instanceof Error ? e.message : e}`);
   }
 }

@@ -43,7 +43,7 @@ export default function PoolStatus({ stats, connected }: PoolStatusProps) {
         <div className="stat-item">
           <span className="stat-label">Hash</span>
           <span className="stat-value">
-            <code className="mono">Poseidon</code>
+            <code className="mono">Pedersen</code>
           </span>
         </div>
       </div>

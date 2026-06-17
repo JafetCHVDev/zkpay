@@ -2,7 +2,7 @@
 
 > **Built for [Stellar Hacks: Real-World ZK](https://dorahacks.io/hackathon/stellar-hacks-zk/detail) by DoraHacks**
 
-<img src="assets/demo.gif" alt="zkPay Demo" width="600"/>
+<!-- Add demo GIF here after recording -->
 
 Zero-knowledge privacy pool on the Stellar network. Deposit tokens, generate a ZK proof of ownership, and withdraw to any address — all without revealing your identity or which deposit you own.
 
@@ -99,7 +99,7 @@ zkpay/
 
 - Node.js >= 18
 - npm >= 9
-- [Freighter Wallet](https://freighter.app/) browser extension (for wallet connection)
+- [Freighter Wallet](https://freighter.app/) browser extension (optional — the app uses ephemeral Stellar keypairs via Friendbot by default)
 
 ### Installation
 
@@ -181,11 +181,7 @@ The Soroban contract (`contracts/pool/src/lib.rs`) will implement:
 5. **Withdraw Flow**: Submit proof → verify on-chain → funds sent to recipient.
 6. **Privacy Analysis**: Show that the withdrawal address cannot be linked to the deposit.
 
-### Screenshots
-
-| Deposit | Withdraw | Pool Stats |
-|---------|----------|------------|
-| ![Deposit](assets/deposit.png) | ![Withdraw](assets/withdraw.png) | ![Stats](assets/stats.png) |
+<!-- Add screenshots here after recording -->
 
 ## Security Considerations
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { StellarService } from "../utils/stellar";
-import "./DepositPanel.css";
+import "./panels.css";
 
 interface WithdrawPanelProps {
   onWithdraw: (amount: number, toAddress: string) => Promise<string | void>;

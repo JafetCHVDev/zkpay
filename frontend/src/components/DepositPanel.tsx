@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { StellarService, SecretResult } from "../utils/stellar";
-import "./DepositPanel.css";
+import "./panels.css";
 
 interface DepositPanelProps {
   onDeposit: (amount: number) => Promise<string | void>;

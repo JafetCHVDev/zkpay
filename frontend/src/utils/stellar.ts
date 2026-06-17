@@ -34,7 +34,11 @@ export class StellarService {
 
   async connect(): Promise<string | null> {
     this.keypair = Keypair.random();
-    await this.fundAccount();
+    try {
+      await this.fundAccount();
+    } catch {
+      return null;
+    }
     return this.keypair.publicKey();
   }
 
@@ -45,10 +49,10 @@ export class StellarService {
       const resp = await fetch(`${FRIENDBOT_URL}?addr=${pk}`);
       const data = await resp.json();
       if (!resp.ok) {
-        console.warn("Friendbot funding failed:", data);
+        throw new Error(`Friendbot funding failed: ${data.detail || data.title || "Unknown"}`);
       }
     } catch (e) {
-      console.warn("Friendbot error:", e);
+      throw new Error(`Failed to fund account: ${e instanceof Error ? e.message : e}`);
     }
   }
 
